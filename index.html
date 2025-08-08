@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño.Puro - Tu Visión, Nuestro Arte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .info-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .service-card {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .ai-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .chat-container {
+            flex: 1;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .ai-message {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-right: auto;
+        }
+
+        .user-message {
+            background: #e3f2fd;
+            color: #333;
+            margin-left: auto;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .quick-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .quick-option {
+            background: #e8f4fd;
+            border: 2px solid #4facfe;
+            color: #4facfe;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-option:hover {
+            background: #4facfe;
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 10px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .typing-indicator.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">diseño.puro</h1>
+            <p class="tagline">Tu Visión, Nuestro Arte</p>
+        </header>
+
+        <div class="main-content">
+            <div class="info-section">
+                <h2>🎨 Nuestros Servicios</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h4>📅 Almanaques</h4>
+                    </div>
+                    <div class="service-card">
+                        <h4>📄 Flyers</h4>
+                    </div>
+                    <div class="service-card">
+                        <h4>💼 Logos</h4>
+                    </div>
+                    <div class="service-card">
+                        <h4>🎫 Tarjetas</h4>
+                    </div>
+                    <div class="service-card">
+                        <h4>🖼️ Banners</h4>
+                    </div>
+                    <div class="service-card">
+                        <h4>🖼️ Banners</h4>
+                    </div>
+                </div>
+                
+                <h3>✨ ¿Por qué elegirnos?</h3>
+                <ul style="margin-top: 15px; line-height: 1.8;">
+                    <li>🚀 Diseños únicos y creativos</li>
+                    <li>⚡ Entrega rápida y profesional</li>
+                    <li>🎯 Enfoque personalizado</li>
+                    <li>💎 Calidad premium garantizada</li>
+                </ul>
+            </div>
+
+            <div class="chat-section">
+                <div class="chat-header">
+                    <div class="ai-avatar">
+                        <img src="https://i.postimg.cc/fy8JTLJq/OIP-Iq7lodv-KQGdjv-NDUNIjn5g-Ha-Fi.jpg" alt="Diseño Puro" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='🎨';">
+                    </div>
+                    <h3>Asistente de Diseño IA</h3>
+                    <p>¡Cuéntame qué necesitas y te ayudo a crear algo increíble!</p>
+                </div>
+
+                <div class="chat-container" id="chatContainer">
+                    <div class="message ai-message">
+                        ¡Hola! Soy tu asistente de diseño personal. Estoy aquí para ayudarte a crear exactamente lo que necesitas. ¿Qué tipo de diseño te gustaría hacer hoy?
+                    </div>
+                </div>
+
+                <div class="quick-options" id="quickOptions">
+                    <div class="quick-option" onclick="selectQuickOption('Almanaque')">📅 Almanaque - $3.000</div>
+                    <div class="quick-option" onclick="selectQuickOption('Flyer')">📄 Flyer - $5.000</div>
+                    <div class="quick-option" onclick="selectQuickOption('Logo')">💼 Logo - $10.000</div>
+                    <div class="quick-option" onclick="selectQuickOption('Tarjeta')">🎫 Tarjeta - $5.000</div>
+                    <div class="quick-option" onclick="selectQuickOption('Banner')">🖼️ Banner - $8.000</div>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">La IA está escribiendo...</div>
+
+                <div class="input-area">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu mensaje aquí...">
+                    <button class="send-btn" onclick="sendMessage()">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 'initial';
+        let selectedService = '';
+        
+        const prices = {
+            'Flyer': 5000,
+            'Almanaque': 3000,
+            'Banner': 8000,
+            'Tarjeta': 5000,
+            'Logo': 10000
+        };
+
+        const chatContainer = document.getElementById('chatContainer');
+        const chatInput = document.getElementById('chatInput');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const quickOptions = document.getElementById('quickOptions');
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.classList.add('active');
+            setTimeout(() => {
+                typingIndicator.classList.remove('active');
+            }, 1000);
+        }
+
+        function selectQuickOption(service) {
+            selectedService = service;
+            addMessage(service, true);
+            
+            showTyping();
+            setTimeout(() => {
+                const price = prices[service];
+                addMessage(`¡Excelente elección! Un ${service.toLowerCase()} tiene un precio de ${price.toLocaleString()} pesos. ¿Te interesa continuar con este servicio?`);
+                currentStep = 'pricing';
+                quickOptions.style.display = 'none';
+            }, 1500);
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, true);
+            chatInput.value = '';
+            
+            processMessage(message);
+        }
+
+        function processMessage(message) {
+            showTyping();
+            
+            setTimeout(() => {
+                let response = '';
+                
+                switch(currentStep) {
+                    case 'initial':
+                        if (message.toLowerCase().includes('almanaque') || message.toLowerCase().includes('calendario')) {
+                            selectedService = 'Almanaque';
+                            response = `¡Excelente elección! Un almanaque tiene un precio de ${prices['Almanaque'].toLocaleString()} pesos. ¿Te interesa continuar con este servicio?`;
+                            currentStep = 'pricing';
+                        } else if (message.toLowerCase().includes('flyer') || message.toLowerCase().includes('volante')) {
+                            selectedService = 'Flyer';
+                            response = `¡Perfecto! Un flyer tiene un precio de ${prices['Flyer'].toLocaleString()} pesos. ¿Te interesa continuar con este servicio?`;
+                            currentStep = 'pricing';
+                        } else if (message.toLowerCase().includes('logo')) {
+                            selectedService = 'Logo';
+                            response = `¡Genial! Un logo tiene un precio de ${prices['Logo'].toLocaleString()} pesos. ¿Te interesa continuar con este servicio?`;
+                            currentStep = 'pricing';
+                        } else if (message.toLowerCase().includes('tarjeta')) {
+                            selectedService = 'Tarjeta';
+                            response = `¡Excelente! Una tarjeta tiene un precio de ${prices['Tarjeta'].toLocaleString()} pesos. ¿Te interesa continuar con este servicio?`;
+                            currentStep = 'pricing';
+                        } else if (message.toLowerCase().includes('banner')) {
+                            selectedService = 'Banner';
+                            response = `¡Perfecto! Un banner tiene un precio de ${prices['Banner'].toLocaleString()} pesos. ¿Te interesa continuar con este servicio?`;
+                            currentStep = 'pricing';
+                        } else {
+                            response = 'Me encanta tu entusiasmo! Para ayudarte mejor, ¿podrías especificar qué tipo de diseño necesitas? Puedes usar los botones de arriba o simplemente decirme: almanaque, flyer, logo, tarjeta o banner.';
+                        }
+                        quickOptions.style.display = 'none';
+                        break;
+                        
+                    case 'pricing':
+                        if (message.toLowerCase().includes('sí') || message.toLowerCase().includes('si') || 
+                            message.toLowerCase().includes('yes') || message.toLowerCase().includes('dale') ||
+                            message.toLowerCase().includes('bueno') || message.toLowerCase().includes('ok') ||
+                            message.toLowerCase().includes('acepto') || message.toLowerCase().includes('interesa')) {
+                            
+                            response = `¡Fantástico! Me alegra que te interese nuestro ${selectedService.toLowerCase()}. Para continuar con tu pedido y coordinar todos los detalles, te voy a conectar directo con nuestro WhatsApp:`;
+                            
+                            setTimeout(() => {
+                                addMessage(response);
+                                setTimeout(() => {
+                                    const whatsappBtn = document.createElement('div');
+                                    whatsappBtn.style.cssText = `
+                                        background: linear-gradient(45deg, #25D366, #128C7E);
+                                        color: white;
+                                        padding: 15px 25px;
+                                        border-radius: 25px;
+                                        text-align: center;
+                                        margin: 15px 0;
+                                        cursor: pointer;
+                                        font-weight: bold;
+                                        font-size: 16px;
+                                        transition: transform 0.3s ease;
+                                    `;
+                                    whatsappBtn.innerHTML = `📱 Ir a WhatsApp: +54 9 11 3159-8030`;
+                                    whatsappBtn.onclick = () => {
+                                        window.open(`https://wa.me/5491131598030?text=Hola! Me interesa hacer un ${selectedService.toLowerCase()} por ${prices[selectedService].toLocaleString()} pesos`, '_blank');
+                                    };
+                                    whatsappBtn.onmouseover = () => whatsappBtn.style.transform = 'scale(1.05)';
+                                    whatsappBtn.onmouseout = () => whatsappBtn.style.transform = 'scale(1)';
+                                    
+                                    chatContainer.appendChild(whatsappBtn);
+                                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                                    
+                                    setTimeout(() => {
+                                        addMessage('¡Perfecto! Allí podremos hablar en detalle sobre tu proyecto. ¡Gracias por elegir diseño.puro! 🎨✨');
+                                        currentStep = 'completed';
+                                    }, 1000);
+                                }, 1000);
+                            }, 0);
+                            return;
+                            
+                        } else if (message.toLowerCase().includes('no') || message.toLowerCase().includes('caro') ||
+                                   message.toLowerCase().includes('mucho') || message.toLowerCase().includes('pensarlo')) {
+                            response = 'Entiendo perfectamente. Si cambias de opinión o necesitas algo diferente, estaré aquí para ayudarte. ¿Te interesa algún otro tipo de diseño? Nuestros precios son: Flyer $5.000, Almanaque $3.000, Banner $8.000, Tarjeta $5.000, Logo $10.000';
+                            currentStep = 'initial';
+                            quickOptions.style.display = 'flex';
+                        } else {
+                            response = `El precio de nuestro ${selectedService.toLowerCase()} es de ${prices[selectedService].toLocaleString()} pesos. ¿Te interesa continuar? Puedes responder "sí" o "no" 😊`;
+                        }
+                        break;
+                        
+                    case 'completed':
+                        response = '¡Gracias! Ya tienes el enlace de WhatsApp arriba. Si necesitas algo más o quieres hacer otro pedido, solo dímelo. ¡Estoy aquí para ayudarte! 🎨';
+                        break;
+                        
+                    default:
+                        response = '¡Hola! ¿En qué puedo ayudarte hoy? Puedes elegir uno de nuestros servicios o simplemente decirme qué necesitas.';
+                        currentStep = 'initial';
+                        quickOptions.style.display = 'flex';
+                        break;
+                }
+                
+                if (response) {
+                    addMessage(response);
+                }
+            }, 1500);
+        }
+
+        function sendEmailToDesigner() {
+            // Función eliminada - ya no se usa
+        }
+
+        // Event listener para Enter en el input
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
